@@ -1,5 +1,4 @@
-name: dotnet deploy
-description: Deploy .NET Core project
+name: dependency check
 
 runs:
   using: composite
