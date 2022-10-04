@@ -1,0 +1,60 @@
+name: dotnet CI/CD
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: The owner and repository name
+        required: false
+        type: string
+        default: ${{ github.repository }}
+      base_ref:
+        description: The branch or tag ref or commit SHA that be base code.
+        required: false
+        type: string
+        default: ${{ github.base_ref || 'main' }}
+      target_ref:
+        description: The branch or tag ref or commit SHA that will be merged to base code.
+        required: false
+        type: string
+        default: ${{ github.head_ref || github.ref_name }}
+      application_name:
+        description: Name of application
+        required: true
+        type: string
+      code_language:
+        description: The program language of this repository
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ inputs.target_ref }}
+          fetch-depth: 0
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+#
+#      - name: Build, tag, and push image to Amazon ECR
+#        env:
+#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          ECR_REPOSITORY: ${{ inputs.application_name }}
+#          IMAGE_TAG: ${{ inputs.target_ref }}
+#          run: |
+#            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+#            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
