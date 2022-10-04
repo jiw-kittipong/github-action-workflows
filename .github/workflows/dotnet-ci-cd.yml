@@ -68,6 +68,8 @@ jobs:
           application_name: ${{ inputs.application_name }}
           dotnet_version: ${{ inputs.dotnet_version }}
           dotnet_project_path: ${{ inputs.dotnet_project_path }}
+          aws_access_key_id: ${{ secrets.aws_access_key_id }}
+          aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
   deploy:
     runs-on: ubuntu-latest
