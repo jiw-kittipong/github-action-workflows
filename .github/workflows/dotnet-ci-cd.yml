@@ -44,36 +44,12 @@ on:
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Build ${{ inputs.application_name }}
+        uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
         with:
-          ref: ${{ inputs.target_ref }}
-          fetch-depth: 0
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.aws_access_key_id }}
-          aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
-          aws-region: ap-southeast-1 # TODO: env 1
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push the image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ inputs.application_name }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          # Build a docker container and push it to ECR 
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg DOTNET_VERSION=${{ inputs.dotnet_version }} -f ${{ inputs.dotnet_project_path }}/Dockerfile .
-          echo "Pushing image to ECR..."
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          target_ref: ${{ inputs.target_ref }}
+          application_name: ${{ inputs.application_name }}
+          dotnet_version: ${{ inputs.dotnet_version }}
+          dotnet_project_path: ${{ inputs.dotnet_project_path }}
