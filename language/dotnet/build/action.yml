@@ -1,49 +1,34 @@
 name: dotnet build
+description: Build .NET Core project
 
 inputs:
   target_ref:
     required: false
-    type: string
+    description: The branch or tag ref or commit SHA that will be merged to base code.
     default: ${{ github.head_ref || github.ref_name }}
   application_name:
     required: true
-    type: string
+    description: Name of application
   code_language:
     required: true
-    type: string
+    description: The program language of this repository
   dotnet_version:
-    required: false
-    type: string
-    default: "6.0"
+    description: The version of .NET Core SDK
+    required: true
   dotnet_project_path:
     required: true
-    type: string
+    description: The path of .NET Core project
   aws_access_key_id:
+    description: AWS access key ID
     required: true
   aws_secret_access_key:
+    description: AWS secret access key
     required: true
 
 runs:
   using: composite
   steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ inputs.target_ref }}
-        fetch-depth: 0
-
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ inputs.aws_access_key_id }}
-        aws-secret-access-key: ${{ inputs.aws_secret_access_key }}
-        aws-region: ap-southeast-1
-
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-
-    - name: Build, tag, and push the image to Amazon ECR
+    - name: Build
       id: build-image
       shell: bash
       env:
@@ -51,8 +36,14 @@ runs:
         ECR_REPOSITORY: ${{ inputs.application_name }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        # Build a docker container and push it to ECR
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg DOTNET_VERSION=${{ inputs.dotnet_version }} -f ${{ inputs.dotnet_project_path }}/Dockerfile .
-        echo "Pushing image to ECR..."
+
+    - name: Tag, and push the image to Amazon ECR
+      shell: bash
+      env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ inputs.application_name }}
+          IMAGE_TAG: ${{ github.sha }}
+      run: |
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
