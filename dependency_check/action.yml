@@ -1,9 +1,0 @@
-name: dependency check
-
-runs:
-  using: composite
-  steps:
-    - name: deploy
-      shell: bash
-      run: |
-        echo "HELLO WORLD"
