@@ -51,15 +51,15 @@ jobs:
 #    - name: Lint
 #      uses: jiw-kittipong/github-action-workflows/language/dotnet/lint@main
 
-#  test:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Test
-#        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
 
   build:
     runs-on: ubuntu-latest
-#    needs: [lint, test]
+    needs: [test]
     steps:
       - name: Build image
         uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
@@ -71,9 +71,9 @@ jobs:
           aws_access_key_id: ${{ secrets.aws_access_key_id }}
           aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: [ build ]
-#    steps:
-#      - name: Deploy ${{ inputs.application_name }}
-#        uses: jiw-kittipong/github-action-workflows/deploy@main
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Deploy ${{ inputs.application_name }}
+        uses: jiw-kittipong/github-action-workflows/deploy@main
