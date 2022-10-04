@@ -25,6 +25,14 @@ inputs:
     required: true
     description: AWS secret access key
 
+outputs:
+  image_name:
+    description: The name of Docker image
+    value: ${{ steps.build-image.outputs.image_name }}
+  image_tag:
+    description: The tag of Docker image
+    value: ${{ steps.build-image.outputs.image_tag }}
+
 runs:
   using: composite
   steps:
@@ -45,7 +53,7 @@ runs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build docker image
+    - name: Build and push
       id: build-image
       shell: bash
       env:
@@ -54,13 +62,6 @@ runs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg DOTNET_VERSION=${{ inputs.dotnet_version }} -f ${{ inputs.dotnet_project_path }}/Dockerfile .
-
-    - name: Tag, and push the image to Amazon ECR
-      shell: bash
-      env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ inputs.application_name }}
-          IMAGE_TAG: ${{ github.sha }}
-      run: |
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        echo "::set-output name=image_name::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        echo "::set-output name=image_tag::$IMAGE_TAG"
