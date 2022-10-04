@@ -51,15 +51,15 @@ jobs:
 #    - name: Lint
 #      uses: jiw-kittipong/github-action-workflows/language/dotnet/lint@main
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test
-        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
+#  test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Test
+#        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
 
   build:
     runs-on: ubuntu-latest
-    needs: [lint, test]
+#    needs: [lint, test]
     steps:
       - name: Build image
         uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
