@@ -1,0 +1,10 @@
+name: dotnet lint
+description: Lint .NET Core project
+
+runs:
+  using: composite
+  steps:
+    - name: lint
+      shell: bash
+      run: |
+        echo "HELLO WORLD"
