@@ -30,7 +30,7 @@ on:
         description: The version of .NET Core SDK
         required: false
         type: string
-        default: "6.0"
+        default: "6.0.0"
       dotnet_project_path:
         description: The path of .NET Core project
         required: true
