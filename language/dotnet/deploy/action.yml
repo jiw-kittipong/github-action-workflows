@@ -1,0 +1,10 @@
+name: dotnet deploy
+description: Deploy .NET Core project
+
+runs:
+  using: composite
+  steps:
+    - name: deploy
+      shell: bash
+      run: |
+        echo "HELLO WORLD"
