@@ -1,0 +1,10 @@
+name: dotnet test
+description: Test .NET Core project
+
+runs:
+  using: composite
+  steps:
+    - name: test
+      shell: bash
+      run: |
+        echo "HELLO WORLD"
