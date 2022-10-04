@@ -26,6 +26,11 @@ on:
         description: The program language of this repository
         required: true
         type: string
+      dotnet_version:
+        description: The version of .NET Core SDK
+        required: false
+        type: string
+        default: "6.0"
 
     secrets:
       aws_access_key_id:
@@ -64,10 +69,11 @@ jobs:
           IMAGE_TAG: ${{ inputs.target_ref }}
         run: |
           # Build a docker container and push it to ECR 
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg DOTNET_VERSION=${{ inputs.dotnet_version }} -f src/${{ inputs.application_name }}/Dockerfile .
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+#  docker build -t dotnet-example-srv:1 --build-arg DOTNET_VERSION=6.0 -f src/dotnet-example.API/Dockerfile .
 #      - name: Build, tag, and push image to Amazon ECR
 #        id: build-image
 #        env:
