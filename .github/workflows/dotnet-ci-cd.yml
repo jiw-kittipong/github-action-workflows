@@ -35,7 +35,7 @@ jobs:
     steps:
       - name: Show default environment variables
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.TEST_TEST }}
         run: |
           echo ${#AWS_ACCESS_KEY_ID}
 
