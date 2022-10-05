@@ -36,16 +36,21 @@ runs:
         dotnet_version: ${{ inputs.dotnet_version }}
         dotnet_project_path: ${{ inputs.dotnet_project_path }}
 
-    - name: Unit Test
+    - name: Unit test
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
         dotnet test . ${{ inputs.dotnet_test_args }}
 
-    - name: Code Coverage
+    - name: Code coverage
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
         dotnet tool install --global dotnet-coverage
         dotnet-coverage collect dotnet test -f xml -o coverage.xml
-        ls -al
+
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-coverage-report
+        path: coverage.xml
