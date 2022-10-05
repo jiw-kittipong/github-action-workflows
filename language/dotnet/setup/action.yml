@@ -35,6 +35,13 @@ runs:
       with:
         dotnet-version: ${{ inputs.dotnet_version }}
 
+    - uses: jungwinter/split@master
+      id: project_file
+      with:
+        msg: ${{ inputs.dotnet_project_path }}
+        separator: "/"
+        maxsplit: -1
+
     - name: Install dependencies
       shell: bash
-      run: ls -al
+      run: echo "${{ steps.project_file.outputs }}"
