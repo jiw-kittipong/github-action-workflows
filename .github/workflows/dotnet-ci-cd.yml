@@ -39,7 +39,7 @@ on:
         description: Enable test
         required: false
         type: boolean
-        default: true
+        default: false
       dotnet_test_args:
         description: Arguments for test
         required: false
