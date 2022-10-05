@@ -34,6 +34,7 @@ runs:
         dotnet_project_path: ${{ inputs.dotnet_project_path }}
 
     - name: Test
+      working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
-        dotnet test ${{ inputs.dotnet_project_path }} --configuration Release --no-build --no-restore --verbosity normal
+        dotnet test . --configuration Release --no-build --no-restore --verbosity normal
