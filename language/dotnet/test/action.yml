@@ -51,6 +51,7 @@ runs:
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v3
+      working-directory: ${{ inputs.dotnet_project_path }}
       with:
         name: code-coverage-report
         path: coverage.xml
