@@ -56,7 +56,6 @@ on:
 
 jobs:
   hello:
-    if: ${{ github.event.label.name == 'ready to test' }}
     runs-on: ubuntu-latest
     steps:
       - name: Hello world
