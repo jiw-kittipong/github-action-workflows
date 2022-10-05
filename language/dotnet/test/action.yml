@@ -36,8 +36,14 @@ runs:
         dotnet_version: ${{ inputs.dotnet_version }}
         dotnet_project_path: ${{ inputs.dotnet_project_path }}
 
-    - name: Test
+    - name: Unit Test
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
         dotnet test . ${{ inputs.dotnet_test_args }}
+
+    - name: Code Coverage
+      working-directory: ${{ inputs.dotnet_project_path }}
+      shell: bash
+      run: |
+        dotnet test . ${{ inputs.dotnet_test_args }} --collect:"XPlat Code Coverage"

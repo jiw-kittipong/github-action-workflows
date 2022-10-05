@@ -59,8 +59,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        if: ${{ inputs.dotnet_test_enabled == true }}
         uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
+        if: ${{ inputs.dotnet_test_enabled == true }}
         with:
           dotnet_version: ${{ inputs.dotnet_version }}
           dotnet_project_path: ${{ inputs.dotnet_project_path }}
