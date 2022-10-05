@@ -35,7 +35,7 @@ on:
         description: The path of .NET Core project
         required: true
         type: string
-      dotnet_test_enable:
+      dotnet_test_enabled:
         description: Enable test
         required: false
         type: boolean
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        if: ${{ inputs.dotnet_test_enable == true}}
+        if: ${{ inputs.dotnet_test_enabled == true}}
         uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
         with:
           dotnet_version: ${{ inputs.dotnet_version }}
