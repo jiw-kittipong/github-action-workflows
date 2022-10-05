@@ -37,4 +37,4 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: dotnet restore ${{ inputs.dotnet_project_path }}.sln
+      run: ls -al
