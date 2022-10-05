@@ -33,8 +33,7 @@ runs:
         dotnet_version: ${{ inputs.dotnet_version }}
         dotnet_project_path: ${{ inputs.dotnet_project_path }}
 
-#
-#    - name: Restore
-#      shell: bash
-#      run: ls -al
-#      dotnet restore ${{ inputs.dotnet_project_path }}.sln
+    - name: Test
+      shell: bash
+      run: |
+        dotnet test ${{ inputs.dotnet_project_path }} --configuration Release --no-build --no-restore --verbosity normal
