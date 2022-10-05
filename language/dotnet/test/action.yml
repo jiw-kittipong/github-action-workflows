@@ -1,10 +1,15 @@
 name: dotnet test
 description: Test .NET Core project
 
+inputs:
+  dotnet_version:
+    description: The version of .NET Core SDK
+    required: true
+
 runs:
   using: composite
   steps:
-    - name: test
-      shell: bash
-      run: |
-        echo "HELLO WORLD"
+    - name: Setup
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ inputs.dotnet_version }}
