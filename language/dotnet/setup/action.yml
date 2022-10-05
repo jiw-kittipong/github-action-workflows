@@ -17,6 +17,9 @@ inputs:
   dotnet_version:
     description: The version of .NET Core SDK
     required: true
+  dotnet_project_path:
+    description: The path of .NET Core project
+    required: true
 
 runs:
   using: composite
