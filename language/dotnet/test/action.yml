@@ -30,7 +30,7 @@ runs:
         repository: ${{ inputs.repository }}
         base_ref: ${{ inputs.base_ref }}
         target_ref: ${{ inputs.target_ref }}
-        dotnet-version: ${{ inputs.dotnet_version }}
+        dotnet_version: ${{ inputs.dotnet_version }}
 #
 #    - name: Restore
 #      shell: bash
