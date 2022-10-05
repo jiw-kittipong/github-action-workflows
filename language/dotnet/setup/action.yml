@@ -40,8 +40,8 @@ runs:
       with:
         msg: ${{ inputs.dotnet_project_path }}
         separator: "/"
-        maxsplit: -1
+#        maxsplit: -1
 
     - name: Install dependencies
       shell: bash
-      run: echo "${{ steps.project_file.outputs._1 }}"
+      run: echo "${{ steps.project_file.outputs._n }}"
