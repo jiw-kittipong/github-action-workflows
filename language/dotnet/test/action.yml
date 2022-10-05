@@ -40,5 +40,11 @@ runs:
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
-        dotnet add package coverlet.msbuild
-        dotnet test . ${{ inputs.dotnet_test_args }} /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../coverage.xml
+        dotnet test . ${{ inputs.dotnet_test_args }}
+
+    - name: Code Coverage
+      working-directory: ${{ inputs.dotnet_project_path }}
+      shell: bash
+      run: |
+        dotnet tool install --global dotnet-coverage
+        dotnet test . ${{ inputs.dotnet_test_args }} --collect:"XPlat Code Coverage"
