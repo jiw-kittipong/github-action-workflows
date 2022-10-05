@@ -31,6 +31,7 @@ runs:
         base_ref: ${{ inputs.base_ref }}
         target_ref: ${{ inputs.target_ref }}
         dotnet_version: ${{ inputs.dotnet_version }}
+
 #
 #    - name: Restore
 #      shell: bash
