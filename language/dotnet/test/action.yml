@@ -47,5 +47,4 @@ runs:
       shell: bash
       run: |
         dotnet tool install --global dotnet-coverage
-        dotnet test . ${{ inputs.dotnet_test_args }} --collect:"XPlat Code Coverage"
-        dotnet-coverage merge --output coverage.xml .
+        dotnet-coverage collect dotnet test -f xml -o coverage.xml

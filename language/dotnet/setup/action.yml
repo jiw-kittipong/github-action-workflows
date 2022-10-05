@@ -42,7 +42,7 @@ runs:
         restore-keys: |
           ${{ runner.os }}-nuget-
 
-    - name: Install dependencies
+    - name: Install Dependencies
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
