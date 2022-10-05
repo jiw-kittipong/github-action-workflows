@@ -14,18 +14,9 @@ inputs:
     description: The branch or tag ref or commit SHA that be base code.
     required: false
     default: ${{ github.base_ref || 'main' }}
-  application_name:
-    required: true
-    description: Name of application
-  code_language:
-    required: true
-    description: The program language of this repository
   dotnet_version:
     description: The version of .NET Core SDK
     required: true
-  dotnet_project_path:
-    required: true
-    description: The path of .NET Core project
 
 runs:
   using: composite
@@ -35,3 +26,8 @@ runs:
         repository: ${{ inputs.repository }}
         base_ref: ${{ inputs.base_ref }}
         target_ref: ${{ inputs.target_ref }}
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ inputs.dotnet_version }}

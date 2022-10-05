@@ -2,6 +2,18 @@ name: dotnet test
 description: Test .NET Core project
 
 inputs:
+  repository:
+    description: The owner and repository name
+    required: false
+    default: ${{ github.repository }}
+  target_ref:
+    required: false
+    description: The branch or tag ref or commit SHA that will be merged to base code.
+    default: ${{ github.head_ref || github.ref_name }}
+  base_ref:
+    description: The branch or tag ref or commit SHA that be base code.
+    required: false
+    default: ${{ github.base_ref || 'main' }}
   dotnet_version:
     description: The version of .NET Core SDK
     required: true
@@ -13,11 +25,14 @@ runs:
   using: composite
   steps:
     - name: Setup
-      uses: actions/setup-dotnet@v2
+      uses: jiw-kittipong/github-action-workflows/setup@main
       with:
+        repository: ${{ inputs.repository }}
+        base_ref: ${{ inputs.base_ref }}
+        target_ref: ${{ inputs.target_ref }}
         dotnet-version: ${{ inputs.dotnet_version }}
-
-    - name: Restore
-      shell: bash
-      run: ls -al
+#
+#    - name: Restore
+#      shell: bash
+#      run: ls -al
 #      dotnet restore ${{ inputs.dotnet_project_path }}.sln
