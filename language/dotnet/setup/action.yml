@@ -35,6 +35,13 @@ runs:
       with:
         dotnet-version: ${{ inputs.dotnet_version }}
 
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Install dependencies
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
