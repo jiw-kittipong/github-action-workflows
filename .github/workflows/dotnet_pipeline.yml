@@ -1,4 +1,4 @@
-name: dotnet CI/CD
+name: dotnet pipeline
 
 on:
   workflow_call:
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ test ]
     steps:
-      - name: Build image
+      - name: Build
         uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
         with:
           target_ref: ${{ inputs.target_ref }}
