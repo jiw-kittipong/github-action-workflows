@@ -55,34 +55,39 @@ on:
         required: true
 
 jobs:
-  test:
+  hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Test
-        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
-        if: ${{ inputs.dotnet_test_enabled == true }}
-        with:
-          dotnet_version: ${{ inputs.dotnet_version }}
-          dotnet_project_path: ${{ inputs.dotnet_project_path }}
-          dotnet_test_args: ${{ inputs.dotnet_test_args }}
-
-  build:
-    runs-on: ubuntu-latest
-    needs: [ test ]
-    steps:
-      - name: Build
-        uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
-        with:
-          target_ref: ${{ inputs.target_ref }}
-          application_name: ${{ inputs.application_name }}
-          dotnet_version: ${{ inputs.dotnet_version }}
-          dotnet_project_path: ${{ inputs.dotnet_project_path }}
-          aws_access_key_id: ${{ secrets.aws_access_key_id }}
-          aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      - name: Deploy ${{ inputs.application_name }}
-        uses: jiw-kittipong/github-action-workflows/deploy@main
+      - name: Hello world
+        run: echo "Hello, world!"
+#  test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Test
+#        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
+#        if: ${{ inputs.dotnet_test_enabled == true }}
+#        with:
+#          dotnet_version: ${{ inputs.dotnet_version }}
+#          dotnet_project_path: ${{ inputs.dotnet_project_path }}
+#          dotnet_test_args: ${{ inputs.dotnet_test_args }}
+#
+#  build:
+#    runs-on: ubuntu-latest
+#    needs: [ test ]
+#    steps:
+#      - name: Build
+#        uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
+#        with:
+#          target_ref: ${{ inputs.target_ref }}
+#          application_name: ${{ inputs.application_name }}
+#          dotnet_version: ${{ inputs.dotnet_version }}
+#          dotnet_project_path: ${{ inputs.dotnet_project_path }}
+#          aws_access_key_id: ${{ secrets.aws_access_key_id }}
+#          aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
+#
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: [ build ]
+#    steps:
+#      - name: Deploy
+#        uses: jiw-kittipong/github-action-workflows/deploy@main
