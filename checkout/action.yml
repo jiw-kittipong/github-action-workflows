@@ -1,0 +1,33 @@
+name: checkout
+description: Checkout your repository
+
+inputs:
+  repository:
+    description: repository name
+    required: false
+    default: ${{ github.repository }}
+  base_ref:
+    description: branch, tag or commit SHA to be base code
+    required: false
+    default: ${{ github.base_ref || 'main' }}
+  target_ref:
+    description: branch, tag or commit SHA to merge into base code
+    required: false
+    default: ${{ github.head_ref || github.ref_name }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.base_ref }}
+        clean: true
+    - shell: bash
+      if: ${{ inputs.base_ref != inputs.target_ref }}
+      run: |
+        git config user.name "Pi Financial Github Action"
+        git config user.email "github.action@pi.financial"
+        git fetch
+        git merge --no-commit --no-ff origin/${{ inputs.target_ref }}
