@@ -35,6 +35,16 @@ on:
         description: The path of .NET Core project
         required: true
         type: string
+      dotnet_test_enable:
+        description: Enable test
+        required: false
+        type: boolean
+        default: true
+      dotnet_test_args:
+        description: Arguments for test
+        required: false
+        type: string
+        default: "--configuration Release --no-build --no-restore --verbosity normal"
 
     secrets:
       aws_access_key_id:
@@ -49,10 +59,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
+        if: ${{ inputs.dotnet_test_enable == true}}
         uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
         with:
           dotnet_version: ${{ inputs.dotnet_version }}
           dotnet_project_path: ${{ inputs.dotnet_project_path }}
+          dotnet_test_args: ${{ inputs.dotnet_test_args }}
 
   build:
     runs-on: ubuntu-latest

@@ -20,6 +20,9 @@ inputs:
   dotnet_project_path:
     description: The path of .NET Core project
     required: true
+  dotnet_test_args:
+    description: Arguments for test
+    required: true
 
 runs:
   using: composite
@@ -37,4 +40,4 @@ runs:
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
-        dotnet test . --configuration Release --no-build --no-restore --verbosity normal
+        dotnet test . ${{ inputs.dotnet_test_args }}
