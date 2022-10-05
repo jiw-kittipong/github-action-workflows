@@ -44,4 +44,4 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: echo "${{ steps.project_file.outputs }}"
+      run: echo "${{ steps.project_file.outputs._1 }}"
