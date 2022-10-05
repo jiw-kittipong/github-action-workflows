@@ -25,7 +25,7 @@ runs:
   using: composite
   steps:
     - name: Setup
-      uses: jiw-kittipong/github-action-workflows/setup@main
+      uses: jiw-kittipong/github-action-workflows/language/dotnet/setup@main
       with:
         repository: ${{ inputs.repository }}
         base_ref: ${{ inputs.base_ref }}
