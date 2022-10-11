@@ -49,6 +49,11 @@ on:
         required: false
         type: string
         default: "--configuration Release --no-build --no-restore --verbosity normal"
+      dotnet_migration_enabled:
+        description: Enable migration
+        required: false
+        type: boolean
+        default: false
 
     secrets:
       aws_access_key_id:
@@ -86,9 +91,24 @@ jobs:
           aws_access_key_id: ${{ secrets.aws_access_key_id }}
           aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: [ build ]
-#    steps:
-#      - name: Deploy
-#        uses: jiw-kittipong/github-action-workflows/deploy@main
+  migration:
+    if: ${{ inputs.dotnet_migration_enabled == true }}
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Migration
+        uses: jiw-kittipong/github-action-workflows/language/dotnet/migration@main
+        if: ${{ inputs.dotnet_migration_enabled == true }}
+        with:
+          target_ref: ${{ inputs.target_ref }}
+          application_name: ${{ inputs.application_name }}
+          dotnet_version: ${{ inputs.dotnet_version }}
+          dotnet_project_path: ${{ inputs.dotnet_project_path }}
+          dotnet_migration_args: ${{ inputs.dotnet_migration_args }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Deploy
+        uses: jiw-kittipong/github-action-workflows/deploy@main
