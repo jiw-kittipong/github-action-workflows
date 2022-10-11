@@ -24,6 +24,11 @@ inputs:
     description: Enable migration
     required: false
 
+outputs:
+  status:
+    description: The status of migration
+    value: ${{ steps.migration.outputs.status }}
+
 runs:
   using: composite
   steps:
@@ -41,4 +46,9 @@ runs:
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
-        echo "dotnet migration"
+        if [ "${{ inputs.dotnet_migration_enabled }}" = "true" ]; then
+          echo "::set-output name=status::true"
+          echo "dotnet migration"
+        else
+          echo "::set-output name=status::false"
+        fi
