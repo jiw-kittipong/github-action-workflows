@@ -37,6 +37,7 @@ runs:
         dotnet_project_path: ${{ inputs.dotnet_project_path }}
 
     - name: Migration
+      id: migration
       working-directory: ${{ inputs.dotnet_project_path }}
       shell: bash
       run: |
