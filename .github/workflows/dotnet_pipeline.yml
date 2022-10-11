@@ -108,7 +108,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [ migration ]
+    needs:
+#      - build
+      - {{ inputs.dotnet_migration_enabled == true ? 'migration' }}
     steps:
       - name: Deploy
         uses: jiw-kittipong/github-action-workflows/deploy@main
