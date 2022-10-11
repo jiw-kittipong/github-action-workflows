@@ -108,6 +108,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: [ build ]
     steps:
       - name: Deploy
         uses: jiw-kittipong/github-action-workflows/deploy@main
