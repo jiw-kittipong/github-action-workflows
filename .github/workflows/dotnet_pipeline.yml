@@ -108,7 +108,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ migration.outputs.status == true }}
     steps:
       - name: Deploy
         uses: jiw-kittipong/github-action-workflows/deploy@main
