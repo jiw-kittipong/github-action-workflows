@@ -1,5 +1,10 @@
 name: deploy
 
+inputs:
+  version:
+    description:  "Version"
+    required:  true
+
 runs:
   using: composite
   steps:
@@ -8,3 +13,4 @@ runs:
       run: |
         echo "HELLO WORLD"
         CALL PATCH IMAGE TAG IN ARGO ${{ github.sha }}
+        {{ inputs.version }} 
