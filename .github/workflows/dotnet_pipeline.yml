@@ -117,4 +117,4 @@ jobs:
       - name: Deploy
         uses: jiw-kittipong/github-action-workflows/deploy@main
         with:
-          version: {{ build.outputs.image_tag }}
+          version: ${{ build.outputs.image_tag }}
