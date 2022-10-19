@@ -103,6 +103,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
   hello:
+    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
       - name: Hello
