@@ -7,10 +7,10 @@ on:
       - ready to deploy
       - api
       - worker
-  merge:
-    branches:
-      - main
-      - develop
+#  merge:
+#    branches:
+#      - main
+#      - develop
 
   workflow_call:
     inputs:
