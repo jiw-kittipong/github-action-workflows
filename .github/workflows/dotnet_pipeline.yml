@@ -103,8 +103,11 @@ jobs:
           aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
   hello:
-    runs-on: ubuntu-latest
-    run: echo "${{ steps.build.outputs.image_name }}"
+    steps:
+      - name: Hello
+        shell: bash
+        run: echo "Hello, ${{ steps.build.outputs.image_name }}:${{ steps.build.outputs.image_tag }}"
+
 #  migration:
 #    if: ${{ inputs.dotnet_migration_enabled == true }}
 #    runs-on: ubuntu-latest
