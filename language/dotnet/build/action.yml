@@ -28,10 +28,10 @@ inputs:
 outputs:
   image_name:
     description: The name of Docker image
-    value: ${{ steps.build-image.outputs.image_name }}
+    value: ${{ steps.build-image.outputs.image_name }} 1
   image_tag:
     description: The tag of Docker image
-    value: ${{ steps.build-image.outputs.image_tag }}
+    value: ${{ steps.build-image.outputs.image_tag }} 1
 
 runs:
   using: composite
@@ -43,7 +43,7 @@ runs:
         target_ref: ${{ inputs.target_ref }}
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v3
       with:
         aws-access-key-id: ${{ inputs.aws_access_key_id }}
         aws-secret-access-key: ${{ inputs.aws_secret_access_key }}
