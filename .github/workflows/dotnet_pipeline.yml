@@ -4,6 +4,13 @@ on:
   pull_request:
     tags:
       - ready to test
+      - ready to deploy
+      - api
+      - worker
+  merge:
+    branches:
+      - main
+      - develop
 
   workflow_call:
     inputs:
@@ -94,7 +101,7 @@ jobs:
 
   hello:
     runs-on: ubuntu-latest
-    run: echo "${{ steps.build.outputs.image_tag }}"
+    run: echo "${{ steps.build.outputs }}"
 #  migration:
 #    if: ${{ inputs.dotnet_migration_enabled == true }}
 #    runs-on: ubuntu-latest
