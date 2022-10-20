@@ -62,7 +62,8 @@ on:
 jobs:
   test:
     if: |
-      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
+      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name) &&
+      contains(fromJSON('["api", "worker"]'), github.event.label.name)
 #      (contains(github.event.pull_request.labels.*.name, 'ready to test') ||
 #      contains(github.event.pull_request.labels.*.name, 'ready to test'))
     runs-on: ubuntu-latest
