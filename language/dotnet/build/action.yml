@@ -54,8 +54,8 @@ runs:
       shell: bash
       run: |
           echo "test"
-          echo "image_name=${{ inputs.application_name }}" >> $GITHUB_OUTPUT
-          echo "image_tag=${{ inputs.code_language }}-${{ inputs.dotnet_version }}-${{ inputs.target_ref }}" >> $GITHUB_OUTPUT
+          echo "image_name=${{ inputs.application_name }}" >> $GITHUB_ENV
+          echo "image_tag=${{ inputs.code_language }}-${{ inputs.dotnet_version }}-${{ inputs.target_ref }}" >> $GITHUB_ENV
 #          echo "::set-output name=image_name::${{ inputs.application_name }}"
 #          echo "::set-output name=image_tag::${{ inputs.code_language }}-${{ inputs.dotnet_version }}-${{ inputs.target_ref }}"
 #    - name: Login to Amazon ECR
