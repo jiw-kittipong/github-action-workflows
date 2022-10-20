@@ -53,6 +53,16 @@ runs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Tag version
+      id: tag-version
+      shell: bash
+      run: |
+#        if [[ ${{ inputs.target_ref }} == "main" ]]; then
+#          echo "::set-output name=tag::latest"
+#        else
+#          echo "::set-output name=tag::${{ inputs.target_ref }}"
+#        fi
+
     - name: Build and push
       id: build-image
       shell: bash
@@ -60,6 +70,8 @@ runs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ inputs.application_name }}
         IMAGE_TAG: ${{ github.sha }}
+#        ECR_REPOSITORY: ${{ steps.tag-version.outputs.tag }}
+#        IMAGE_TAG: ${{ steps.tag-version.outputs.tag }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg DOTNET_VERSION=${{ inputs.dotnet_version }} -f ${{ inputs.dotnet_project_path }}/Dockerfile .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

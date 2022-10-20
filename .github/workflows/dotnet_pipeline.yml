@@ -6,10 +6,10 @@ on:
       - ready to test
       - ready to deploy
       - api
-#  merge:
-#    branches:
-#      - main
-#      - develop
+  push:
+    branches:
+      - main
+      - develop
 
   workflow_call:
     inputs:
@@ -71,7 +71,11 @@ on:
 
 jobs:
   test:
-#    if: ${{ github.event.label.name == 'ready to test' }}
+    if: |
+      github.event_name == 'pull_request' &&
+      (contains(fromJSON('["ready to test", "ready to deploy", "api"]'), github.event.pull_request.labels.*.name)
+#      (contains(github.event.pull_request.labels.*.name, 'ready to test') ||
+#      contains(github.event.pull_request.labels.*.name, 'api'))
     runs-on: ubuntu-latest
     steps:
       - name: Test
@@ -83,7 +87,10 @@ jobs:
           dotnet_test_args: ${{ inputs.dotnet_test_args }}
 
   build:
-#    if: ${{ github.event.label.name == 'ready to test' }}
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.label.name == 'ready to test' &&
+
     runs-on: ubuntu-latest
     outputs:
       image_name: ${{ steps.step-build.outputs.image_name }}
@@ -102,7 +109,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
 
   migration:
-    if: ${{ inputs.dotnet_migration_enabled == true }}
+    if: inputs.dotnet_migration_enabled == true
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
