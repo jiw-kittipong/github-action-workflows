@@ -84,6 +84,7 @@ jobs:
 
   build:
 #    if: ${{ github.event.label.name == 'ready to test' }}
+    id: build
     outputs:
       image_name: "11"
       image_tag: "22"
