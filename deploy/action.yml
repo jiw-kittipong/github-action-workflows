@@ -11,6 +11,4 @@ runs:
     - name: deploy
       shell: bash
       run: |
-        echo "HELLO WORLD"
-        CALL PATCH IMAGE TAG IN ARGO ${{ github.sha }}
-        ${{ inputs.version }} 
+        echo "HELLO WORLD" ${{ inputs.version }} 

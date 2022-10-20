@@ -86,8 +86,8 @@ jobs:
 #    if: ${{ github.event.label.name == 'ready to test' }}
     runs-on: ubuntu-latest
     outputs:
-      image_name: ${{ steps.step-build.outputs.image_name }} 1
-      image_tag: ${{ steps.step-build.outputs.image_tag }} 2
+      image_name: ${{ steps.step-build.outputs.image_name }}
+      image_tag: ${{ steps.step-build.outputs.image_tag }}
     needs: [ test ]
     steps:
       - name: Build
@@ -126,4 +126,4 @@ jobs:
       - name: Deploy
         uses: jiw-kittipong/github-action-workflows/deploy@main
         with:
-          version: ${{ needs.build.outputs.image_tag }}
+          version: "${{ needs.build.outputs.image_name }}:${{ needs.build.outputs.image_tag }}"
