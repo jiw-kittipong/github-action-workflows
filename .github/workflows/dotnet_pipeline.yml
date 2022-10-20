@@ -76,8 +76,8 @@ jobs:
 
   build:
     if: |
-      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name) && 
-      github.event.pull_request.merged
+      github.event.pull_request.merged &&
+      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
     runs-on: ubuntu-latest
     outputs:
       image_name: ${{ steps.step-build.outputs.image_name }}
