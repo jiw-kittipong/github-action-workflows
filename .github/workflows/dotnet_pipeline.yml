@@ -84,7 +84,6 @@ jobs:
 
   build:
 #    if: ${{ github.event.label.name == 'ready to test' }}
-    id: build
     outputs:
       image_name: "11"
       image_tag: "22"
@@ -108,7 +107,7 @@ jobs:
     steps:
       - name: Hello
         shell: bash
-        run: echo "Hello, ${{ steps.build.outputs.image_name }}:${{ steps.build.outputs.image_tag }}"
+        run: echo "Hello, ${{ needs.build.outputs.image_name }}:${{ needs.build.outputs.image_tag }}"
 
 #  migration:
 #    if: ${{ inputs.dotnet_migration_enabled == true }}
