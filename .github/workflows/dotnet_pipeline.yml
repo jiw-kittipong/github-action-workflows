@@ -62,7 +62,6 @@ on:
 jobs:
   test:
     if: |
-      github.event.label.name == 'ready to test'
 #      github.event_name == 'pull_request' &&
 #      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name) &&
 #      contains(fromJSON('["api", "worker"]'), github.event.label.name)
