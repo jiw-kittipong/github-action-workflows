@@ -86,12 +86,12 @@ jobs:
       - id: split
         uses: jungwinter/split@v2
         with:
-          msg: ${{ github.head_ref }}
+          msg: ${{ github.ref_name }}
           separator: '/'
 
       - shell: bash
         run: |
-          echo "HELLO WORLD ${{ steps.split.outputs.version }}"
+          echo "HELLO WORLD ${{ steps.split.outputs.version }} ${{ github.head_ref }} ${{ github.ref_name }}"
 #  build:
 #    if: |
 #      github.event.pull_request.merged
