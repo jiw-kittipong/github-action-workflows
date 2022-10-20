@@ -47,15 +47,17 @@ runs:
       with:
         aws-access-key-id: ${{ inputs.aws_access_key_id }}
         aws-secret-access-key: ${{ inputs.aws_secret_access_key }}
-        aws-region: ap-southeast-1 # TODO: can be remove if set default region in AWS
+        aws-region: ap-southeast-1
 
     - name: test
       id: build-image
       shell: bash
       run: |
           echo "test"
-          echo "::set-output name=image_name::${{ inputs.application_name }}"
-          echo "::set-output name=image_tag::${{ inputs.code_language }}-${{ inputs.dotnet_version }}-${{ inputs.target_ref }}"
+          echo "image_name=${{ inputs.application_name }}" >> GITHUB_OUTPUT
+          echo "image_tag=${{ inputs.code_language }}-${{ inputs.dotnet_version }}-${{ inputs.target_ref }}" >> GITHUB_OUTPUT
+#          echo "::set-output name=image_name::${{ inputs.application_name }}"
+#          echo "::set-output name=image_tag::${{ inputs.code_language }}-${{ inputs.dotnet_version }}-${{ inputs.target_ref }}"
 #    - name: Login to Amazon ECR
 #      id: login-ecr
 #      uses: aws-actions/amazon-ecr-login@v1
