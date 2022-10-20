@@ -85,13 +85,13 @@ jobs:
   build:
 #    if: ${{ github.event.label.name == 'ready to test' }}
     outputs:
-      image_name: "11"
-      image_tag: "22"
+      image_name: ${{ steps.build-image.outputs.image_name }}
+      image_tag: ${{ steps.build-image.outputs.image_tag }}
     runs-on: ubuntu-latest
     needs: [ test ]
     steps:
       - name: Build
-#        id: step-build
+        id: step-build
         uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
         with:
           target_ref: ${{ inputs.target_ref }}
