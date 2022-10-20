@@ -76,7 +76,7 @@ jobs:
   build:
     if: |
       (!(github.event.action == 'closed' && github.event.pull_request.merged != true))
-    runs- on: ubuntu-latest
+    runs-on: ubuntu-latest
     outputs:
       image_name: ${{ steps.step-build.outputs.image_name }}
       image_tag: ${{ steps.step-build.outputs.image_tag }}
