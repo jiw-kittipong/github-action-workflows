@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: split
-        name: jungwinter/split@v2
+        uses: jungwinter/split@v2
         with:
           text: ${{ github.head_ref }}
           separator: '/'
