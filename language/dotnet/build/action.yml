@@ -25,13 +25,13 @@ inputs:
     required: true
     description: AWS secret access key
 
-outputs:
-  image_name:
-    description: The name of Docker image
-    value: ${{ steps.build-image.outputs.image_name }} 1
-  image_tag:
-    description: The tag of Docker image
-    value: ${{ steps.build-image.outputs.image_tag }} 1
+#outputs:
+#  image_name:
+#    description: The name of Docker image
+#    value: ${{ steps.build-image.outputs.image_name }} 1
+#  image_tag:
+#    description: The tag of Docker image
+#    value: ${{ steps.build-image.outputs.image_tag }} 1
 
 runs:
   using: composite
