@@ -80,7 +80,7 @@ jobs:
 
   hello:
     if: |
-      github.event.pull_request.merged
+#      github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
       - id: split
