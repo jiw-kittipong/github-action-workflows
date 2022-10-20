@@ -80,7 +80,6 @@ jobs:
     outputs:
       image_name: ${{ steps.step-build.outputs.image_name }}
       image_tag: ${{ steps.step-build.outputs.image_tag }}
-    needs: [ test ]
     steps:
       - name: Build
         id: step-build
