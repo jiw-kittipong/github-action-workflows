@@ -1,16 +1,6 @@
 name: dotnet pipeline
 
 on:
-  pull_request:
-    tags:
-      - ready to test
-      - ready to deploy
-      - api
-  push:
-    branches:
-      - main
-      - develop
-
   workflow_call:
     inputs:
       repository:
