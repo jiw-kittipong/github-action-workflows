@@ -91,7 +91,7 @@ jobs:
 
       - shell: bash
         run: |
-          echo "HELLO WORLD ${{ steps.split.outputs.version }} ${{ github.head_ref }} ${{ github.ref_name }}"
+          echo "HELLO WORLD ${{ steps.split.outputs._1 }} ${{ github.head_ref }} ${{ github.ref_name }}"
 #  build:
 #    if: |
 #      github.event.pull_request.merged
