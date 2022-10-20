@@ -80,12 +80,16 @@ jobs:
 
   hello:
     if: |
-      github.event.pull_request.merged
+      github.event.pull_request.merged && startsWith(github.head_ref, 'releases/')
     runs-on: ubuntu-latest
     steps:
-      shell: bash
-      run: |
-        echo "HELLO WORLD"
+      - id: split
+        name: jungwinter/split@v2
+        run: |
+          echo "version=${{ steps.split.outputs._1 }}" >> $GITHUB_OUTPUT
+      - shell: bash
+        run: |
+          echo "HELLO WORLD {{ steps.split.outputs.version }}"
 #  build:
 #    if: |
 #      github.event.pull_request.merged
