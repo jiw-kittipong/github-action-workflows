@@ -1,6 +1,11 @@
 name: dotnet pipeline
 
 on:
+  workflow_run:
+    workflows: ["dotnet build", "dotnet test"]
+    types:
+      - completed
+
   workflow_call:
     inputs:
       repository:
@@ -73,51 +78,59 @@ jobs:
           dotnet_project_path: ${{ inputs.dotnet_project_path }}
           dotnet_test_args: ${{ inputs.dotnet_test_args }}
 
-  build:
+  hello:
     if: |
       github.event.pull_request.merged
     runs-on: ubuntu-latest
-    outputs:
-      image_name: ${{ steps.step-build.outputs.image_name }}
-      image_tag: ${{ steps.step-build.outputs.image_tag }}
     steps:
-      - name: Build
-        id: step-build
-        uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
-        with:
-          target_ref: ${{ inputs.target_ref }}
-          application_name: ${{ inputs.application_name }}
-          dotnet_version: ${{ inputs.dotnet_version }}
-          dotnet_project_path: ${{ inputs.dotnet_project_path }}
-          aws_access_key_id: ${{ secrets.aws_access_key_id }}
-          aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
-
-  migration:
-    if: |
-      github.event.pull_request.merged &&
-      inputs.dotnet_migration_enabled
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      - name: Migration
-        uses: jiw-kittipong/github-action-workflows/language/dotnet/migration@main
-        if: ${{ inputs.dotnet_migration_enabled == true }}
-        with:
-          target_ref: ${{ inputs.target_ref }}
-          application_name: ${{ inputs.application_name }}
-          dotnet_version: ${{ inputs.dotnet_version }}
-          dotnet_project_path: ${{ inputs.dotnet_project_path }}
-          dotnet_migration_args: ${{ inputs.dotnet_migration_args }}
-
-  deploy:
-    if: |
-      always() &&
-      github.event.pull_request.merged && 
-      (needs.migration.result == 'success' || needs.migration.result == 'skipped')
-    runs-on: ubuntu-latest
-    needs: [ build, migration ]
-    steps:
-      - name: Deploy
-        uses: jiw-kittipong/github-action-workflows/deploy@main
-        with:
-          version: "${{ needs.build.outputs.image_name }}:${{ needs.build.outputs.image_tag }}"
+      shell: bash
+      run: |
+        echo "HELLO WORLD"
+#  build:
+#    if: |
+#      github.event.pull_request.merged
+#    runs-on: ubuntu-latest
+#    outputs:
+#      image_name: ${{ steps.step-build.outputs.image_name }}
+#      image_tag: ${{ steps.step-build.outputs.image_tag }}
+#    steps:
+#      - name: Build
+#        id: step-build
+#        uses: jiw-kittipong/github-action-workflows/language/dotnet/build@main
+#        with:
+#          target_ref: ${{ inputs.target_ref }}
+#          application_name: ${{ inputs.application_name }}
+#          dotnet_version: ${{ inputs.dotnet_version }}
+#          dotnet_project_path: ${{ inputs.dotnet_project_path }}
+#          aws_access_key_id: ${{ secrets.aws_access_key_id }}
+#          aws_secret_access_key: ${{ secrets.aws_secret_access_key }}
+#
+#  migration:
+#    if: |
+#      github.event.pull_request.merged &&
+#      inputs.dotnet_migration_enabled
+#    runs-on: ubuntu-latest
+#    needs: [ build ]
+#    steps:
+#      - name: Migration
+#        uses: jiw-kittipong/github-action-workflows/language/dotnet/migration@main
+#        if: ${{ inputs.dotnet_migration_enabled == true }}
+#        with:
+#          target_ref: ${{ inputs.target_ref }}
+#          application_name: ${{ inputs.application_name }}
+#          dotnet_version: ${{ inputs.dotnet_version }}
+#          dotnet_project_path: ${{ inputs.dotnet_project_path }}
+#          dotnet_migration_args: ${{ inputs.dotnet_migration_args }}
+#
+#  deploy:
+#    if: |
+#      always() &&
+#      github.event.pull_request.merged &&
+#      (needs.migration.result == 'success' || needs.migration.result == 'skipped')
+#    runs-on: ubuntu-latest
+#    needs: [ build, migration ]
+#    steps:
+#      - name: Deploy
+#        uses: jiw-kittipong/github-action-workflows/deploy@main
+#        with:
+#          version: "${{ needs.build.outputs.image_name }}:${{ needs.build.outputs.image_tag }}"
