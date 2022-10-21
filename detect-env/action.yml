@@ -9,7 +9,8 @@ outputs:
 runs:
   using: composite
   steps:
-    - id: get-environment
+    - name: Get environment
+      id: get-environment
       shell: bash
       run: |
         if [ "${{ github.event.label.name }}" == "ready to test" && github.event.pull_request.base.ref == "develop" ]; then

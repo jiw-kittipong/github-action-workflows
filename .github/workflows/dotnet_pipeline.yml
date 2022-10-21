@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - id: get-env
-        uses: jiw-kittipong/github-action-workflows/language/detect-env@main
+        uses: jiw-kittipong/github-action-workflows/detect-env@main
 
       - shell: bash
         run: |
