@@ -58,7 +58,7 @@ runs:
       uses: jiw-kittipong/github-action-workflows/detect-env@main
 
     - name: Split image tag
-      if: ${{ steps.detect-environment.outputs.environment == 'nonprod' }}
+      if: ${{ steps.detect-environment.outputs.environment == 'prod' }}
       id: split-image-tag
       uses: jungwinter/split@v2
       with:
