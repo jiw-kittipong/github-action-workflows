@@ -53,15 +53,11 @@ runs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Tag version
-      id: tag-version
-      shell: bash
-      run: |
-#        if [[ ${{ inputs.target_ref }} == "main" ]]; then
-#          echo "::set-output name=tag::latest"
-#        else
-#          echo "::set-output name=tag::${{ inputs.target_ref }}"
-#        fi
+    - name: Detect environment
+      id: detect-environment
+      uses: jiw-kittipong/github-action-workflows/detect-environment@main
+      with:
+        target_ref: ${{ inputs.target_ref }}
 
     - name: Build and push
       id: build-image

@@ -40,7 +40,7 @@ runs:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-
+          ${{ runner.os }}-nuget
 
     - name: Install dependencies
       working-directory: ${{ inputs.dotnet_project_path }}

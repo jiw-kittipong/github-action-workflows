@@ -1,11 +1,6 @@
 name: dotnet pipeline
 
 on:
-  workflow_run:
-    workflows: ["dotnet build", "dotnet test"]
-    types:
-      - completed
-
   workflow_call:
     inputs:
       repository:
@@ -65,33 +60,23 @@ on:
         required: true
 
 jobs:
-  test:
-    if: |
-      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test
-        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
-        if: ${{ inputs.dotnet_test_enabled == true }}
-        with:
-          dotnet_version: ${{ inputs.dotnet_version }}
-          dotnet_project_path: ${{ inputs.dotnet_project_path }}
-          dotnet_test_args: ${{ inputs.dotnet_test_args }}
-
-  hello:
-    if: |
-#      github.event.pull_request.merged
-    runs-on: ubuntu-latest
-    steps:
-      - id: split
-        uses: jungwinter/split@v2
-        with:
-          msg: ${{ github.head_ref }}
-          separator: '/'
-
-      - shell: bash
-        run: |
-          echo "HELLO WORLD ${{ steps.split.outputs._1 }} ${{ github.head_ref }} ${{ github.ref_name }}"
+  - id: get-environment
+    shell: bash
+    run: |
+      echo "${{ github.event.pull_request.base.ref }}"
+#  test:
+#    if: |
+#      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Test
+#        uses: jiw-kittipong/github-action-workflows/language/dotnet/test@main
+#        if: ${{ inputs.dotnet_test_enabled == true }}
+#        with:
+#          dotnet_version: ${{ inputs.dotnet_version }}
+#          dotnet_project_path: ${{ inputs.dotnet_project_path }}
+#          dotnet_test_args: ${{ inputs.dotnet_test_args }}
+#
 #  build:
 #    if: |
 #      github.event.pull_request.merged
