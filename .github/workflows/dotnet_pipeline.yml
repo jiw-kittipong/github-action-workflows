@@ -63,10 +63,12 @@ jobs:
   demo:
     runs-on: ubuntu-latest
     steps:
-      - id: get-environment
-        shell: bash
+      - id: get-env
+        uses: jiw-kittipong/github-action-workflows/language/detect-env@main
+
+      - shell: bash
         run: |
-          echo "${{ github.event.pull_request.base.ref }}"
+          echo "${{ steps.get-env.outputs.environment }}"
 #  test:
 #    if: |
 #      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
