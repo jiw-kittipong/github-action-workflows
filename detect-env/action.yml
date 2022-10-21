@@ -6,6 +6,8 @@ outputs:
     description: The environment key
     value: ${{ steps.get-environment.outputs.environment }}
 
+#TODO: Check from branch feature/* nonprod
+#TODO: Check from branch release/* prod
 runs:
   using: composite
   steps:
@@ -13,8 +15,9 @@ runs:
       id: get-environment
       shell: bash
       run: |
-        if [ "${{ github.event.label.name }}" == "ready to test" ] && [ "${{ github.event.pull_request.base.ref }}" == "develop" ]; then
+        if [ "${{ github.event.pull_request.base.ref }}" == "develop" ]; then
           echo "environment=nonprod" >> $GITHUB_OUTPUT
-        elif [ "${{ github.event_name }}" == "ready to deploy" ] && [ "${{ github.event.pull_request.base.ref }}" == "main" ]; then
+        elif [ "${{ github.event.pull_request.base.ref }}" == "main" ]; then
           echo "environment=prod" >> $GITHUB_OUTPUT
         fi
+        
