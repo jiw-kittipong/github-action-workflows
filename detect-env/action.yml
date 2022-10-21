@@ -6,8 +6,6 @@ outputs:
     description: The environment key
     value: ${{ steps.get-environment.outputs.environment }}
 
-#TODO: Check from branch feature/* nonprod
-#TODO: Check from branch release/* prod
 runs:
   using: composite
   steps:
