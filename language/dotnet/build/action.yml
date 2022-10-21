@@ -71,7 +71,7 @@ runs:
       run: |
         if [ "${{ steps.detect-environment.outputs.environment }}" == "nonprod" ]; then
           echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-        else
+        elif [ "${{ steps.detect-environment.outputs.environment }}" == "prod" ]; then
           echo "tag=${{ steps.split.outputs._1 }}" >> $GITHUB_OUTPUT
         fi
 
