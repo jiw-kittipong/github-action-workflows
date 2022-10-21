@@ -60,10 +60,12 @@ on:
         required: true
 
 jobs:
-  - id: get-environment
-    shell: bash
-    run: |
-      echo "${{ github.event.pull_request.base.ref }}"
+  - demo:
+      steps:
+        id: get-environment
+        shell: bash
+        run: |
+          echo "${{ github.event.pull_request.base.ref }}"
 #  test:
 #    if: |
 #      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
