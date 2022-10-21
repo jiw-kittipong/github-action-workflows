@@ -56,8 +56,24 @@ runs:
     - name: Detect environment
       id: detect-environment
       uses: jiw-kittipong/github-action-workflows/detect-environment@main
+
+    - name: Split image tag
+      if: ${{ steps.detect-environment.outputs.environment == 'nonprod' }}
+      id: split-image-tag
+      uses: jungwinter/split@v2
       with:
-        target_ref: ${{ inputs.target_ref }}
+        msg: ${{ github.head_ref }}
+        separator: '/'
+
+    - name: Image tag
+      id: image-tag
+      shell: bash
+      run: |
+        if [ "${{ steps.detect-environment.outputs.environment }}" == "nonprod" ]; then
+          echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        else
+          echo "tag=${{ steps.split.outputs._1 }}" >> $GITHUB_OUTPUT
+        fi
 
     - name: Build and push
       id: build-image
@@ -65,9 +81,7 @@ runs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ inputs.application_name }}
-        IMAGE_TAG: ${{ github.sha }}
-#        ECR_REPOSITORY: ${{ steps.tag-version.outputs.tag }}
-#        IMAGE_TAG: ${{ steps.tag-version.outputs.tag }}
+        IMAGE_TAG: ${{ steps.image-tag.outputs.tag }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --build-arg DOTNET_VERSION=${{ inputs.dotnet_version }} -f ${{ inputs.dotnet_project_path }}/Dockerfile .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
