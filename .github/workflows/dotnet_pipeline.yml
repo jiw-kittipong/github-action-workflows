@@ -68,7 +68,7 @@ jobs:
 
       - shell: bash
         run: |
-          echo "${{ steps.get-env.outputs.environment }}"
+          echo ${{ steps.get-env.outputs.environment }}
 #  test:
 #    if: |
 #      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
