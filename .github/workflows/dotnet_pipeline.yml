@@ -114,7 +114,7 @@ jobs:
       always() &&
       github.event.pull_request.merged &&
       (needs.migration.result == 'success' || needs.migration.result == 'skipped') &&
-      needs.migration.build == 'success'
+      needs.build.result == 'success'
     runs-on: ubuntu-latest
     needs: [ build, migration ]
     steps:
