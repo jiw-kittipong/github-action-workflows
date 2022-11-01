@@ -66,14 +66,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Detect environment
+      - name: Dev
+        if: ${{ github.event.pull_request.base.ref }}" == "develop" && startsWith(github.head_ref, 'feature/')
         shell: bash
         run: |
-          if [ "${{ github.event.pull_request.base.ref }}" == "develop" ] && [startsWith(github.head_ref, 'feature/')]; then
-            echo "DEPLOY_ENV=nonprd" >> $GITHUB_ENV
-          elif [ "${{ github.event.pull_request.base.ref }}" == "main" ] && [startsWith(github.head_ref, 'release/')]; then
-            echo "DEPLOY_ENV=prd" >> $GITHUB_ENV
-          fi
+          echo "DEPLOY_ENV=nonprd" >> $GITHUB_ENV
       - name: TEST
         shell: bash
         run: |
