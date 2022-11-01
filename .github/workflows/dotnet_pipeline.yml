@@ -77,7 +77,7 @@ jobs:
           fi
           echo "${{ github.event.pull_request.base.ref }}"
           echo "${{ github.event.pull_request.head.ref }}"
-          echo ${{ env.ENVIRONMENT }}
+          echo "${{ env.ENVIRONMENT }}"
 #  test:
 #    if: |
 #      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
