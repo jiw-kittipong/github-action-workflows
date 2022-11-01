@@ -60,7 +60,7 @@ on:
         required: true
 
 env:
-
+  DEPLOY_ENV: ""
 
 jobs:
   test:
@@ -71,13 +71,16 @@ jobs:
         shell: bash
         run: |
           if [ "${{ github.event.pull_request.base.ref }}" == "develop" ]; then
-            echo "ENVIRONMENT=nonprd" >> $GITHUB_ENV
+            echo "DEPLOY_ENV=nonprd" >> $GITHUB_ENV
           elif [ "${{ github.event.pull_request.base.ref }}" == "main" ]; then
-            echo "ENVIRONMENT=prd" >> $GITHUB_ENV
+            echo "DEPLOY_ENV=prd" >> $GITHUB_ENV
           fi
+      - name: TEST
+        shell: bash
+        run: |
           echo "${{ github.event.pull_request.base.ref }}"
-          echo "${{ github.event.pull_request.head.ref }}"
-          echo "${{ env.ENVIRONMENT }}"
+          echo "${GITHUB_REF##*/}"
+          echo "${{ DEPLOY_ENV }}"
 #  test:
 #    if: |
 #      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
