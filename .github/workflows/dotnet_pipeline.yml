@@ -80,7 +80,7 @@ jobs:
         run: |
           echo "${{ github.event.pull_request.base.ref }}"
           echo "${GITHUB_REF##*/}"
-          echo "${{ DEPLOY_ENV }}"
+          echo "${{ env.DEPLOY_ENV }}"
 #  test:
 #    if: |
 #      contains(fromJSON('["ready to test", "ready to deploy"]'), github.event.label.name)
