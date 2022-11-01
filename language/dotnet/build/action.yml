@@ -24,6 +24,9 @@ inputs:
   aws_secret_access_key:
     required: true
     description: AWS secret access key
+  environment:
+    required: true
+    description: The environment of this repository
 
 outputs:
   image_name:
@@ -58,7 +61,7 @@ runs:
       uses: jiw-kittipong/github-action-workflows/detect-env@main
 
     - name: Split image tag
-      if: ${{ steps.detect-environment.outputs.environment == 'prod' }}
+      if: input.environment == 'prd'
       id: split-image-tag
       uses: jungwinter/split@v2
       with:
@@ -69,9 +72,9 @@ runs:
       id: image-tag
       shell: bash
       run: |
-        if [ "${{ steps.detect-environment.outputs.environment }}" == "nonprod" ]; then
+        if [ "${{ input.environment }}" == "nonprd" ]; then
           echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-        elif [ "${{ steps.detect-environment.outputs.environment }}" == "prod" ]; then
+        elif [ "${{ input.environment }}" == "prd" ]; then
           echo "tag=${{ steps.split-image-tag.outputs._1 }}" >> $GITHUB_OUTPUT
         fi
 
