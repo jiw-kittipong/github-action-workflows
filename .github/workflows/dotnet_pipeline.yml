@@ -69,9 +69,9 @@ jobs:
       - name: Detect environment
         shell: bash
         run: |
-          if [ "${{ github.event.pull_request.base.ref }}" == "develop" ] && startsWith(github.head_ref, 'feature/'); then
+          if [ "${{ github.event.pull_request.base.ref }}" == "develop" ] && [startsWith(github.head_ref, 'feature/')]; then
             echo "DEPLOY_ENV=nonprd" >> $GITHUB_ENV
-          elif [ "${{ github.event.pull_request.base.ref }}" == "main" ] startsWith(github.head_ref, 'release/'); then
+          elif [ "${{ github.event.pull_request.base.ref }}" == "main" ] && [startsWith(github.head_ref, 'release/')]; then
             echo "DEPLOY_ENV=prd" >> $GITHUB_ENV
           fi
       - name: TEST
