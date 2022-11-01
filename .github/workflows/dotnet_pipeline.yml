@@ -75,6 +75,8 @@ jobs:
           elif [ "${{ github.event.pull_request.base.ref }}" == "main" ]; then
             echo "environment=prd" >> $GITHUB_ENV
           fi
+          echo "${{ github.event.pull_request.base.ref }}"
+          echo "${{ github.event.pull_request.target.ref }}"
           echo ${{ env.ENVIRONMENT }}
 #  test:
 #    if: |
