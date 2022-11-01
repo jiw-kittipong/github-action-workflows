@@ -60,7 +60,7 @@ on:
         required: true
 
 env:
-  DEPLOY_ENV: ""
+  DEPLOY_ENV: "TEST"
 
 jobs:
   test:
