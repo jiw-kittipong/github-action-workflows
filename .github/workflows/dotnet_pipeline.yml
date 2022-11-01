@@ -71,9 +71,9 @@ jobs:
         shell: bash
         run: |
           if [ "${{ github.event.pull_request.base.ref }}" == "develop" ]; then
-            echo "environment=nonprd" >> $GITHUB_ENV
+            echo "ENVIRONMENT=nonprd" >> $GITHUB_ENV
           elif [ "${{ github.event.pull_request.base.ref }}" == "main" ]; then
-            echo "environment=prd" >> $GITHUB_ENV
+            echo "ENVIRONMENT=prd" >> $GITHUB_ENV
           fi
           echo "${{ github.event.pull_request.base.ref }}"
           echo "${{ github.event.pull_request.target.ref }}"
