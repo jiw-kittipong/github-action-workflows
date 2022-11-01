@@ -79,7 +79,7 @@ jobs:
         shell: bash
         run: |
           echo "${{ github.event.pull_request.base.ref }}"
-          echo "${GITHUB_REF##*/}"
+          echo "${{ github.head_ref }}"
           echo "${{ env.DEPLOY_ENV }}"
 #  test:
 #    if: |
