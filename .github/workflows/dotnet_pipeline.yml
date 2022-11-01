@@ -66,11 +66,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Dev
+      - name: Nonprd
         if: ${{ github.event.pull_request.base.ref }}" == "develop" && startsWith(github.head_ref, 'feature/')
         shell: bash
         run: |
           echo "DEPLOY_ENV=nonprd" >> $GITHUB_ENV
+      - name: Prd
+        if: ${{ github.event.pull_request.base.ref }}" == "develop" && startsWith(github.head_ref, 'feature/')
+        shell: bash
+        run: |
+          echo "DEPLOY_ENV=prd" >> $GITHUB_ENV
       - name: TEST
         shell: bash
         run: |
